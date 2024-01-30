@@ -1,11 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0
+#
 # Maintainer: kpcyrd <kpcyrd[at]archlinux[dot]org>
+# Maintainer: Truocolo <truocolo@aol.com>
+# Maintainer: Pellegrino Prevete (tallero) <pellegrinoprevete@gmail.com>
 
 pkgname=libngtcp2
 pkgver=1.2.0
 pkgrel=1
 pkgdesc='Implementation of IETF QUIC protocol'
 url='https://github.com/ngtcp2/ngtcp2'
-arch=('x86_64')
+arch=(
+  'x86_64'
+  'arm'
+  'aarch64'
+)
 license=('MIT')
 provides=('libngtcp2.so')
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/ngtcp2/ngtcp2/archive/refs/tags/v${pkgver}.tar.gz")
@@ -30,9 +38,16 @@ check() {
 }
 
 package() {
-  cd ngtcp2-${pkgver}/lib
-  make DESTDIR="${pkgdir}" install
-  install -Dm644 ../COPYING -t "${pkgdir}/usr/share/licenses/${pkgname}"
+  cd \
+    ngtcp2-${pkgver}/lib
+  make \
+    DESTDIR="${pkgdir}" \
+    install
+  install \
+    -Dm644 \
+    ../COPYING \
+    -t \
+      "${pkgdir}/usr/share/licenses/${pkgname}"
 }
 
-# vim: ts=2 sw=2 et:
+# vim:set sw=2 sts=-1 et:
